@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Práctica AJAX</title>
+    </head>
+    <body>
+        <select id="slcCountries">
+            <option>
+                
+            </option>
+        </select>
+        <button id="btnReloadCountries">
+            Cargar paises
+        </button>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+        <script>
+            // Reload the Select's list with AJAX 
+            function doClickCargarPaíses() {
+                // Cleans the select's options
+                $("#slcCountries").empty();
+                
+                // GET HTTP Request
+                $.ajax("countries.json")        // URL
+                .done(function(data) {          // Si hay respuesta exitosa
+                    // Población del select
+                    for(var i = 0; i < data.length; i++) 
+                    {
+                        $("#slcCountries").append(
+                            "<option>" + 
+                            data[i].name +
+                            "</option>"
+                        );
+                    }
+                })
+                .fail(function() {          // Si hay error
+                    alert("Failure");
+                })
+                .always(function() {        // Ejecución permanente
+                    ;
+                });
+            }
+            
+            $(function() {
+                // Responde al evento click con una función
+                $("#btnReloadCountries").click(doClickCargarPaíses());
+            });
+        </script>
+    </body>
+</html>
